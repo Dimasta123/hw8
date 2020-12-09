@@ -34,7 +34,7 @@ class Student {
   }
   getAverageMark() {
     return this.dismiss
-      ? this.marks.reduce((total, mark) => total + mark) / this.marks.length
+      ? this.marks.reduce((total, mark) => total += mark) / this.marks.length
       : null;
   }
 }
