@@ -14,25 +14,31 @@ class Student {
       return console.log(
         `Student ${this.course} ${this.university} ${this.fullName}`,
       );
+    } else {
+      return console.log(`Этот студент отсранен ${this.fullName}`);
     }
   }
   getMarks() {
     if (!this.dismiss) {
       return console.log(` ${this.fullName} имеет такие оценки ${this.marks} `);
     } else {
-      return null;
+      return null || console.log(`Этот студент отстранен ${this.fullName} `);
     }
   }
   set mark(num) {
     if (!this.dismiss) {
       this.marks.push(num);
+    } else {
+      return null || console.log(`Этот студент отстранен ${this.fullName} `);
     }
   }
   dismisser() {
-    return (this.dismiss = true);
+    return (this.dismiss = true) ||
+      console.log(`Этот студент отстранен ${this.fullName} `);
   }
   recover() {
-    return (this.dismiss = false);
+    return (this.dismiss = false) ||
+      console.log(`Этот студент востановлен ${this.fullName} `);
   }
   getAverageMark() {
     return !this.dismiss
@@ -43,14 +49,15 @@ class Student {
 class BudgetStudent extends Student {
   constructor(university, course, fullName) {
     super(university, course, fullName);
-    this.scholarShip = '1400 uh';
-    this.getScholarship = setInterval();
-
+    this.scholarShip = '1400';
     setInterval(
-      function getScholarships() {
-        if (!this.dismiss && getAverageMark() < 4) {
+      () => {
+        if (this.getAverageMark() >= 4 || !this.dismiss) {
+          console.log(`вы получили ${this.scholarShip} грн стипендии`);
+        } else {
           return console.log(
-            `Добре навчаєтесь студент ${this.student} ви отримали стипендію в розмирі ${this.scholarShip}`,
+            `вы получили ${null} грн стипендии;
+          Этот студент отсранен ${this.fullName}`,
           );
         }
       },
@@ -58,5 +65,8 @@ class BudgetStudent extends Student {
     );
   }
 }
+
 const sasha = new Student('НТУ ХПИ', 3, 'Александр Мазюк');
+const vasya = new BudgetStudent('Иститут Архитектуры', 5, 'Василий Петрович');
+
 
