@@ -7,34 +7,36 @@ class Student {
       {length: 4},
       () => Math.floor(Math.random() * (5 - 1 + 1)) + 1,
     );
-    this.dismiss = true;
+    this.dismiss = false;
   }
   getInfo() {
-    return console.log(
-      `Student ${this.course} ${this.university} ${this.fullName}`,
-    );
+    if (!this.dismiss) {
+      return console.log(
+        `Student ${this.course} ${this.university} ${this.fullName}`,
+      );
+    }
   }
   getMarks() {
-    if (this.dismiss) {
+    if (!this.dismiss) {
       return console.log(` ${this.fullName} имеет такие оценки ${this.marks} `);
     } else {
       return null;
     }
   }
   set mark(num) {
-    if (this.dismiss) {
+    if (!this.dismiss) {
       this.marks.push(num);
     }
   }
   dismisser() {
-    return (this.dismiss = false);
-  }
-  recover() {
     return (this.dismiss = true);
   }
+  recover() {
+    return (this.dismiss = false);
+  }
   getAverageMark() {
-    return this.dismiss
-      ? this.marks.reduce((total, mark) => total += mark) / this.marks.length
+    return !this.dismiss
+      ? this.marks.reduce((total, mark) => total + mark) / this.marks.length
       : null;
   }
 }
@@ -46,7 +48,7 @@ class BudgetStudent extends Student {
 
     setInterval(
       function getScholarships() {
-        if (this.dismiss && getAverageMark() < 4) {
+        if (!this.dismiss && getAverageMark() < 4) {
           return console.log(
             `Добре навчаєтесь студент ${this.student} ви отримали стипендію в розмирі ${this.scholarShip}`,
           );
@@ -57,3 +59,4 @@ class BudgetStudent extends Student {
   }
 }
 const sasha = new Student('НТУ ХПИ', 3, 'Александр Мазюк');
+
